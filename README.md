@@ -1,66 +1,27 @@
+# Programming the microcontroller
 
+These instructions apply to the Linux OS. Using windows is probably possible but untested. The package **dfu-util** should be installed. When connected to the USB cable the microcontroller is seen as a USB CDC device so it is mapped to a **/dev/tty** device, let's say **/dev/ttyACM0**.
 
-# Biquadratic filter
+To upload the file **test.bin**
+  * Enter programming mode either by pressing twice within half a
+    second the reset button, or by setting the line speed to 1200 baud with
+	
+	**stty 1200 -F /dev/ttyACM0**
 
-This program implements a generic biquadratic filter with Z-transform
-$$
-V(z) = \frac{a_0 + a_1 z^{-1}+a_2 z^{-2}}{1 - b_1 z^{-1} - b_2 z^{-2}}
-$$
-which leads to the difference equation
+	In programming mode the yellow led is pulsing.
+	
+  * upload the file *test.bin* with 
+  
+    **dfu-util -D test.bin -a0 -R**
 
-<div align="center">
+# Sending commands to the microcontroller
 
-y[n] = *b~1~* y[n-1] + *b~2~* y[n-2] + *a~0~* x[n] + *a~1~* x[n-1] + *a~2~* x[n-2] 
+Once programmed, the microcontroller remains a USB CDC device so any program that can open a tty device and send and receive characters can be used to send commands. Examples are **cutecom**, the serial package in Python or just plain C. Warning: to not open the device at 1200 baud, or you will trigger the update mode. 
 
-</div>
+All commands are two letters ascii characters, case insensitive, followed by parameters when required. Spaces are ignored. The device will respond with **OK** or **?** for a valid or invalid command, respectively. See the documentation of each program for a complete list.
 
-The initial conditions *c~1~*=y[-1] and *c~2~*=y[-2] can also be set to specific values, if useful, otherwise they are set to 0.
+As an alternative, a GUI based on PyQt is contained in the **python** directory. Run, i.e., *dds.py* with
 
-After reset the circuit starts with preset 1 (see below). To setup an arbitrary filter stop the circuit with *ST* and change the coefficients *a~i~*, *b~i~* and *c~i~* as desired. Type the coefficients as real numbers i.e. 1.414213562373... They will be converted internally as S7.24 numbers for *a~i~*, *b~i~* and S15.16 for *c~i~*. Restart the circuit with *RU* when done.
-
-Please remember that the input voltage must be limited to [0..5] V.
-
-## Presets
-A few sets of coefficients that implement important circuits are preloaded in memory and can be recalled with the command *PR n*
-where *n* is an integer between 1 and 7. A Table of the available presets is shown below. The values for time constants and
-cut-off frequencies assume *T*=10 &#956;s.
-
-| *n* | Description                                                          |
-|-----|----------------------------------------------------------------------|
-| 1   | Copy input to output                                                 |
-| 2   | Low pass filter with &#937; = 1 kHz i.e. f~3dB~ &#8776; 159 Hz       |
-| 3   | Derivator with &#120591; = 1 ms and *K*=10                           |
-| 4   | Integrator with &#120591; = 1 ms and *K*=10                          |
-| 5   | Phase shifter with &#120591; = 495 &#956;s i.e. f~&#960;/2~ = 318 Hz |
-| 6   | Harmonic oscillator with *f~0~*=1 kHz                                |
-| 7   | Half integrator with *f~0~*=318 Hz                                   |
-| 8   | Notch filter with *f~0~*=1 kHz and *a*=0.95                          |
-
-
-## Input/Output Connections
- 
-| Name | Pin   | Description                               |
-|------|-------|-------------------------------------------|
-| A0   | J1 4  | DAC Output                                |
-| A1   | J1 5  | ADC Input                                 |
-| D10  | J2 13 | ISR Monitor (High when executing the ISR) |
-
-## Commands
-
-| Command | Par. Type | Range       | Units   | Description         |
-|---------|-----------|-------------|---------|---------------------|
-| TS      | *uint*    | [10..10^6^] | &#956;s | Set Sampling Period |
-| ST      | *none*    |             |         | Stop Sampling       |
-| RU      | *none*    |             |         | Resume Sampling     |
-| A0      | *double*  | &#177;128   | none    | Set Coeff *a~0~*    |
-| A1      | *double*  | &#177;128   | none    | Set Coeff *a~1~*    |
-| A2      | *double*  | &#177;128   | none    | Set Coeff *a~2~*    |
-| B1      | *double*  | &#177;128   | none    | Set Coeff *b~1~*    |
-| B2      | *double*  | &#177;128   | none    | Set Coeff *b~2~*    |
-| C1      | *double*  | &#177;2048  | none    | Set Coeff *c~1~*    |
-| C2      | *double*  | &#177;2048  | none    | Set Coeff *c~2~*    |
-| PR      | *uint*    | [1..8]      | none    | Run Preset *n*      |
-
-
-
+**python dds.py**
+  
 
