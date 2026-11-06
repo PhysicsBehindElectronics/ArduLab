@@ -3,9 +3,11 @@
 # Biquadratic filter
 
 This program implements a generic biquadratic filter with Z-transform
+
 $$
 V(z) = \frac{a_0 + a_1 z^{-1}+a_2 z^{-2}}{1 - b_1 z^{-1} - b_2 z^{-2}}
 $$
+
 which leads to the difference equation
 
 $$
@@ -45,19 +47,19 @@ cut-off frequencies assume *T*=10 &#956;s.
 
 ## Commands
 
-| Command | Par. Type | Range       | Units   | Description               |
-|---------|-----------|-------------|---------|---------------------------|
-| TS      | *uint*    | [10..10^6^] | &#956;s | Set Sampling Period       |
-| ST      | *none*    |             |         | Stop Sampling             |
-| RU      | *none*    |             |         | Resume Sampling           |
-| A0      | *double*  | &#177;128   | none    | Set Coeff *a<sub>0</sub>* |
-| A1      | *double*  | &#177;128   | none    | Set Coeff *a<sub>1</sub>* |
-| A2      | *double*  | &#177;128   | none    | Set Coeff *a<sub>2</sub>* |
-| B1      | *double*  | &#177;128   | none    | Set Coeff *b<sub>1</sub>* |
-| B2      | *double*  | &#177;128   | none    | Set Coeff *b<sub>2</sub>* |
-| C1      | *double*  | &#177;2048  | none    | Set Coeff *c<sub>1</sub>* |
-| C2      | *double*  | &#177;2048  | none    | Set Coeff *c<sub>2</sub>* |
-| PR      | *uint*    | [1..8]      | none    | Run Preset *n*            |
+| Command | Par. Type | Range                | Units   | Description               |
+|---------|-----------|----------------------|---------|---------------------------|
+| TS      | *uint*    | [10..10<sup>6</sup>] | &#956;s | Set Sampling Period       |
+| ST      | *none*    |                      |         | Stop Sampling             |
+| RU      | *none*    |                      |         | Resume Sampling           |
+| A0      | *double*  | &#177;128            | none    | Set Coeff *a<sub>0</sub>* |
+| A1      | *double*  | &#177;128            | none    | Set Coeff *a<sub>1</sub>* |
+| A2      | *double*  | &#177;128            | none    | Set Coeff *a<sub>2</sub>* |
+| B1      | *double*  | &#177;128            | none    | Set Coeff *b<sub>1</sub>* |
+| B2      | *double*  | &#177;128            | none    | Set Coeff *b<sub>2</sub>* |
+| C1      | *double*  | &#177;2048           | none    | Set Coeff *c<sub>1</sub>* |
+| C2      | *double*  | &#177;2048           | none    | Set Coeff *c<sub>2</sub>* |
+| PR      | *uint*    | [1..8]               | none    | Run Preset *n*            |
 
 
 
