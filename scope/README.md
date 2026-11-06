@@ -32,15 +32,15 @@ Triggering on CH1 or CH2, therefore, requires placing a jumper by hand between A
 
 ## Commands
 
-| Command | Par. Type | Range       | Units   | Description                            |
-|---------|-----------|-------------|---------|----------------------------------------|
-| CH      | *uint*    | [0..3]      | none    | Turn Ch *n* On (0=both Off, 3=both On) |
-| AR      | *none*    |             |         | Arm trigger                            |
-| CA      | *none*    |             |         | Abort acquisition                      |
-| DT      | *uint*    | [10..10^6^] | &#956;s | Set sampling time                      |
-| EX      | *bool*    | 0,1         |         | Use external trigger                   |
-| TL      | *double*  | [0..5]      | V       | Set ext. trigger level                 |
-| TP      | *bool*    | 0,1         |         | Set ext. trigger edge (0=pos.)         |
-| RD      | *uint*    | [1..3]      | none    | Read Ch *n* (3=both)                   |
+| Command | Par. Type | Range                | Units   | Description                            |
+|---------|-----------|----------------------|---------|----------------------------------------|
+| CH      | *uint*    | [0..3]               | none    | Turn Ch *n* On (0=both Off, 3=both On) |
+| AR      | *none*    |                      |         | Arm trigger                            |
+| CA      | *none*    |                      |         | Abort acquisition                      |
+| DT      | *uint*    | [10..10<sup>6</sup>] | &#956;s | Set sampling time                      |
+| EX      | *bool*    | 0,1                  |         | Use external trigger                   |
+| TL      | *double*  | [0..5]               | V       | Set ext. trigger level                 |
+| TP      | *bool*    | 0,1                  |         | Set ext. trigger edge (0=pos.)         |
+| RD      | *uint*    | [1..3]               | none    | Read Ch *n* (3=both)                   |
 
-The *RD n* commands return a binary stream of 2000 bytes per channel. Each couple of bytes is a *uint* number in the [0..2^14^-1] range. See the python code.
+The *RD n* commands return a binary stream of 2000 bytes per channel. Each couple of bytes is a *uint* number in the [0..2<sup>14</sup>-1] range. See the python code.
